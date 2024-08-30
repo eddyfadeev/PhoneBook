@@ -1,7 +1,7 @@
 ﻿using PhoneBook.Extensions;
 using PhoneBook.Interfaces.Handlers;
-using PhoneBook.Interfaces.View;
-using PhoneBook.Interfaces.View.Factory;
+using PhoneBook.Interfaces.Menu;
+using PhoneBook.Interfaces.Menu.Factory;
 using Spectre.Console;
 
 namespace PhoneBook.Handlers;

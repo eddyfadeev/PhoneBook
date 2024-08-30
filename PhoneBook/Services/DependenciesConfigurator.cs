@@ -1,14 +1,20 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PhoneBook.Database;
+using PhoneBook.Database.ContactContext;
 using PhoneBook.Enums;
 using PhoneBook.Handlers;
+using PhoneBook.Interfaces.Database;
 using PhoneBook.Interfaces.Handlers;
-using PhoneBook.Interfaces.View;
-using PhoneBook.Interfaces.View.Factory;
-using PhoneBook.Interfaces.View.Factory.Initializer;
-using PhoneBook.View;
-using PhoneBook.View.Factory;
-using PhoneBook.View.Factory.Initializers;
+using PhoneBook.Interfaces.Menu;
+using PhoneBook.Interfaces.Menu.Factory;
+using PhoneBook.Interfaces.Menu.Factory.Initializer;
+using PhoneBook.Interfaces.Repository;
+using PhoneBook.Menu;
+using PhoneBook.Menu.Factory;
+using PhoneBook.Menu.Factory.Initializers;
+using PhoneBook.Model;
+using PhoneBook.Repository;
 
 namespace PhoneBook.Services;
 
@@ -27,6 +33,12 @@ internal static class DependenciesConfigurator
 
     private static void ConfigureServices(IServiceCollection services)
     {
+        services.AddSingleton<IConfiguration>(Configuration);
+        services.AddDbContext<ContactContext>();
+        
+        services.AddSingleton<IDatabaseManager, DatabaseManager>();
+        services.AddSingleton<IRepository<Contact>, ContactRepository>();
+        
         services.AddTransient<IMenuEntriesInitializer<MainMenu>, MainMenuEntries>();
         services.AddTransient<IMenuEntriesInitializer<SearchMenu>, SearchMenuEntries>();
         services.AddTransient<IMenuEntriesInitializer<ManageMenu>, ManageMenuEntries>();
