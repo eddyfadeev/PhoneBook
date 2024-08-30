@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using PhoneBook.Enums;
 using PhoneBook.Handlers;
 using PhoneBook.Interfaces.Handlers;
@@ -13,10 +14,14 @@ namespace PhoneBook.Services;
 
 internal static class DependenciesConfigurator
 {
+    private const string JsonFileName = "appsettings.json";
+
+    private static IConfiguration Configuration { get; }
     internal static ServiceCollection ServiceCollection { get; } = new();
     
     static DependenciesConfigurator()
     { 
+        Configuration = GetConfiguration().Build();
         ConfigureServices(ServiceCollection);
     }
 
@@ -39,5 +44,14 @@ internal static class DependenciesConfigurator
         services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<MainMenu>>());
         services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<SearchMenu>>());
         services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<ManageMenu>>());
+    }
+
+    private static IConfigurationBuilder GetConfiguration()
+    {
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile(JsonFileName, optional: false, reloadOnChange: true);
+
+        return builder;
     }
 }

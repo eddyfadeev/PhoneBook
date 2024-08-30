@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PhoneBook.Enums;
-using PhoneBook.Extensions;
+using PhoneBook.Exceptions;
 using PhoneBook.Handlers;
+using PhoneBook.Interfaces.Handlers;
 using PhoneBook.Services;
-using PhoneBook.View;
 using Spectre.Console;
 
 namespace PhoneBook;
@@ -17,6 +17,27 @@ internal static class Program
         
         var menuHandler = serviceProvider.GetRequiredService<MenuHandler<MainMenu>>();
         
-        menuHandler.HandleMenu();
+        Start(menuHandler);
+    }
+
+    private static void Start(IMenuHandler menuHandler)
+    {
+        while (true)
+        {
+            try
+            {
+                menuHandler.HandleMenu();
+            } 
+            catch (ReturnToMainMenu e)
+            {
+                // Do nothing
+            }
+            catch (ExitApplication e)
+            {
+                AnsiConsole.MarkupLine(e.Message);
+                break;
+            }
+        }
+        
     }
 }
