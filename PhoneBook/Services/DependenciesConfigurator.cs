@@ -10,6 +10,7 @@ using PhoneBook.Interfaces.Menu;
 using PhoneBook.Interfaces.Menu.Factory;
 using PhoneBook.Interfaces.Menu.Factory.Initializer;
 using PhoneBook.Interfaces.Repository;
+using PhoneBook.Interfaces.Services;
 using PhoneBook.Menu;
 using PhoneBook.Menu.Factory;
 using PhoneBook.Menu.Factory.Initializers;
@@ -48,6 +49,7 @@ internal static class DependenciesConfigurator
         services.AddTransient<IMenuCommandsFactory<ManageMenu>, MenuCommandsFactory<ManageMenu>>();
 
         services.AddTransient<IMenuEntries, MenuEntries>();
+        services.AddTransient<IDynamicEntriesHandler, DynamicEntriesHandler>();
 
         services.AddSingleton<MenuHandler<MainMenu>>();
         services.AddSingleton<MenuHandler<SearchMenu>>();
@@ -56,6 +58,8 @@ internal static class DependenciesConfigurator
         services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<MainMenu>>());
         services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<SearchMenu>>());
         services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<ManageMenu>>());
+
+        services.AddTransient<IContactTableConstructor, ContactTableConstructor>();
     }
 
     private static IConfigurationBuilder GetConfiguration()
