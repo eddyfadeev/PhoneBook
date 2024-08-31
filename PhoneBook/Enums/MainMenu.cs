@@ -2,6 +2,7 @@
 
 namespace PhoneBook.Enums;
 
+[Description("Main Menu")]
 internal enum MainMenu
 {
     [Description("Search for a contact")]

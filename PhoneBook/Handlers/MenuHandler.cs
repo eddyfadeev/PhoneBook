@@ -15,7 +15,8 @@ internal class MenuHandler<TMenu> : IMenuHandler
     public MenuHandler(IMenuCommandsFactory<TMenu> menuCommandsFactory, IMenuEntries menuEntries)
     {
         _menuCommandsFactory = menuCommandsFactory;
-        _menuEntries = menuEntries.GetMenuEntries<TMenu>(string.Empty);
+        var title = GetMenuTitle();
+        _menuEntries = menuEntries.GetMenuEntries<TMenu>(title);
     }
     
     public void HandleMenu()
@@ -30,4 +31,7 @@ internal class MenuHandler<TMenu> : IMenuHandler
         
         return EnumExtensions.GetEnumValueFromDescription<TMenu>(userChoice);
     }
+
+    private static string GetMenuTitle() => 
+        EnumTypeExtensions.GetEnumDescription<TMenu>();
 }

@@ -1,19 +1,14 @@
-﻿using PhoneBook.Interfaces.Handlers;
+﻿using PhoneBook.Enums;
+using PhoneBook.Handlers;
+using PhoneBook.Interfaces.Handlers;
 using PhoneBook.Interfaces.Menu.Command;
 
 namespace PhoneBook.Menu.Commands.MainMenuCommands;
 
-internal sealed class SearchInContactsCommand : ICommand
+internal sealed class SearchInContactsCommand : BaseMainMenuCommand
 {
-    private readonly IMenuHandler _menuHandler;
-    
-    public SearchInContactsCommand(IMenuHandler menuHandler)
+
+    public SearchInContactsCommand(MenuHandler<SearchMenu> menuHandler) : base(menuHandler)
     {
-        _menuHandler = menuHandler;
-    }
-    
-    public void Execute()
-    {
-        _menuHandler.HandleMenu();
     }
 }

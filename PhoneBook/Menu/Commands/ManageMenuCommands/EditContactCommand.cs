@@ -1,11 +1,26 @@
-﻿using PhoneBook.Interfaces.Menu.Command;
+﻿using PhoneBook.Interfaces.Handlers;
+using PhoneBook.Interfaces.Services;
 
 namespace PhoneBook.Menu.Commands.ManageMenuCommands;
 
-internal class EditContactCommand : ICommand
+internal class EditContactCommand : DisplayingContactsCommand
 {
-    public void Execute()
+    private readonly IContactsHandler _contactsHandler;
+    
+    public EditContactCommand(IContactsHandler contactsHandler, IContactTableConstructor contactTableConstructor) : base(contactsHandler, contactTableConstructor)
     {
-        throw new NotImplementedException();
+        _contactsHandler = contactsHandler;
+    }
+
+    public override void Execute()
+    {
+        _contactsHandler.SelectContact(out var contact, out var message);
+
+        if (ContactIsNull(contact, message))
+        {
+            return;
+        }
+        
+        
     }
 }

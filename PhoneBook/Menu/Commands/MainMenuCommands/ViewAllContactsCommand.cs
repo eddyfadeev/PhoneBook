@@ -1,54 +1,32 @@
-﻿using PhoneBook.Extensions;
-using PhoneBook.Interfaces.Handlers;
-using PhoneBook.Interfaces.Menu.Command;
-using PhoneBook.Interfaces.Repository;
+﻿using PhoneBook.Interfaces.Handlers;
 using PhoneBook.Interfaces.Services;
-using PhoneBook.Model;
-using Spectre.Console;
+using PhoneBook.Services;
 
 namespace PhoneBook.Menu.Commands.MainMenuCommands;
 
-internal sealed class ViewAllContactsCommand : ICommand
+internal sealed class ViewAllContactsCommand : DisplayingContactsCommand
 {
-    private readonly IRepository<Contact> _contactRepository;
-    private readonly IDynamicEntriesHandler _dynamicEntriesHandler;
-    private readonly IContactTableConstructor _contactTableConstructor;
+    private readonly IContactsHandler _contactsHandler;
     
     public ViewAllContactsCommand(
-        IRepository<Contact> contactRepository, 
-        IDynamicEntriesHandler dynamicEntriesHandler,
+        IContactsHandler contactsHandler,
         IContactTableConstructor contactTableConstructor
-        )
+        ) : base(contactsHandler, contactTableConstructor)
     {
-        _contactRepository = contactRepository;
-        _dynamicEntriesHandler = dynamicEntriesHandler;
-        _contactTableConstructor = contactTableConstructor;
+        _contactsHandler = contactsHandler;
     }
     
-    public void Execute()
+    public override void Execute()
     {
-        var contacts = _contactRepository.GetAllContacts();
-        
-        if (contacts.Count == 0)
-        {
-            AnsiConsole.MarkupLine("[red]No contacts found.[/]");
-            return;
-        }
+        _contactsHandler.SelectContact(out var contact, out var message);
 
-        var contactNames = contacts.NamesToArray();
-        
-        var selectedContact = _dynamicEntriesHandler.HandleDynamicEntries("Select contact to view details:", contactNames);
-        
-        var contact = contacts.FindContact(selectedContact);
-        
-        if (contact is null)
+        if (ContactIsNull(contact, message))
         {
-            AnsiConsole.MarkupLine("[red]Contact not found.[/]");
             return;
         }
         
-        var contactTable = _contactTableConstructor.CreateContactTable(contact);
-        
-        AnsiConsole.Write(contactTable);
+        DisplayContact(contact);
+
+        HelperService.PressAnyKey();
     }
 }

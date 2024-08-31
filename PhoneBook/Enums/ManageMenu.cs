@@ -2,6 +2,7 @@
 
 namespace PhoneBook.Enums;
 
+[Description("Manage Phone Book")]
 internal enum ManageMenu
 {
     [Description("Add a new contact")]

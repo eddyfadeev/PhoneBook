@@ -10,13 +10,11 @@ public class DynamicEntriesHandler : IDynamicEntriesHandler
     
     private static SelectionPrompt<string> GetSelectionPrompt(string title, params string[] entries)
     {
-        const string backOption = "Back";
-        
         var selectionPrompt = new SelectionPrompt<string>()
             .Title(title)
             .AddChoices(entries);
         
-        selectionPrompt.AddChoice(backOption);
+        selectionPrompt.AddChoice(BackOption);
 
         return selectionPrompt;
     }
