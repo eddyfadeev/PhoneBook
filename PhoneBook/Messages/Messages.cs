@@ -29,18 +29,24 @@ internal static class Messages
     public const string UnknownOption = "[red]Unknown option[/]";
     public const string PressAnyKeyOption = "[white]Press any key to continue...[/]";
     public const string ReturningToPreviousMenu = "[white]Returning to previous menu.[/]";
-
+    
+    public const string InvalidPhoneNumber = "[red]Invalid phone number.[/]\n" +
+                                             "[green]Phone shoild be 10-12 digits long.\n" +
+                                             "+123456789012 or 1234567890[/] ";
+    public const string InvalidEmailAddress = "[red]Invalid email address.[/]" +
+                                              "[green]example@example.com[/]";
+    
     #endregion
     
     #region Prompts
-
     public const string AskName = "[white]Enter a name:[/]";
     public const string AskLastName = "[white]Enter a last name:[/]";
-    public const string AskPhone = "[white]Enter a phone number:[/]";
-    public const string AskEmail = "[white]Enter an email:[/]";
+    public const string AskPhone = "[white]Enter a phone number (or leave it empty):[/]";
+    public const string AskEmail = "[white]Enter an email (or leave it empty):[/]";
     public const string ContactsHandlerTitle = "[white]Select contact from the list:[/]";
     public const string DeletePrompt = "[red]Delete contact?[/]";
     public const string UpdatePrompt = "[red]Update contact?[/]";
+    public const string LeaveEmpty = "[red]Leave it empty?[/]";
     
     #endregion
 }

@@ -11,11 +11,13 @@ internal class DynamicEntriesHandler : IDynamicEntriesHandler
     
     private static SelectionPrompt<Contact> GetSelectionPrompt(string title, params Contact[] entries)
     {
+        const int maxCountPerPage = 4;
         var selectionPrompt = new SelectionPrompt<Contact>()
             .Title(title);
         
         selectionPrompt.AddChoices(entries);
 
+        selectionPrompt.PageSize(maxCountPerPage);
         return selectionPrompt;
     }
 }

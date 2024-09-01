@@ -1,9 +1,11 @@
+using Microsoft.IdentityModel.Tokens;
 using PhoneBook.Enums;
 using PhoneBook.Extensions;
 using PhoneBook.Interfaces.Handlers;
 using PhoneBook.Interfaces.Menu;
 using PhoneBook.Interfaces.Repository;
 using PhoneBook.Model;
+using PhoneBook.Services;
 using Spectre.Console;
 
 namespace PhoneBook.Handlers;
@@ -130,15 +132,64 @@ internal class ContactsHandler : IHandler<Contact>
                     contact.LastName = AskUser(AskLastName);
                     break;
                 case ContactEditOptions.Phone:
-                    contact.PhoneNumber = AskUser(AskPhone);
+                    contact.PhoneNumber = 
+                        AskSpecialInput(ContactEditOptions.Phone);
                     break;
                 case ContactEditOptions.Email:
-                    contact.Email = AskUser(AskEmail);
+                    contact.Email = 
+                        AskSpecialInput(ContactEditOptions.Email);
                     break;
                 default:
                     AnsiConsole.MarkupLine(UnknownOption);
                     break;
             }
+        }
+    }
+
+    private static bool EnsureValidity(string? input, ContactEditOptions validationType)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return AnsiConsole.Confirm(LeaveEmpty);
+        }
+        
+        Func<string, bool> validator = validationType switch
+        {
+            ContactEditOptions.Phone => ValidationService.IsValidPhoneNumber,
+            ContactEditOptions.Email => ValidationService.IsValidEmail,
+            _ => throw new ArgumentException($"Validator is not found for: {validationType}")
+        };
+
+        return validator(input);
+    }
+    
+    private static string AskSpecialInput(ContactEditOptions validationType)
+    {
+        var invalidInputMessage = validationType switch
+        {
+            ContactEditOptions.Phone => InvalidPhoneNumber,
+            ContactEditOptions.Email => InvalidEmailAddress,
+            _ => throw new ArgumentException($"Message is not found for: {validationType}")
+        };
+
+        var message = validationType switch
+        {
+            ContactEditOptions.Phone => AskPhone,
+            ContactEditOptions.Email => AskEmail,
+            _ => throw new ArgumentException($"Message is not found for: {validationType}")
+        };
+        
+        while (true)
+        {
+            AnsiConsole.MarkupLine(message);
+            var input = Console.ReadLine();
+
+            if (EnsureValidity(input, validationType))
+            {
+                return input;
+            }
+            
+            AnsiConsole.MarkupLine(invalidInputMessage);
         }
     }
 
