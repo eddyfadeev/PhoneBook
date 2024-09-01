@@ -12,6 +12,13 @@ internal class MenuEntries : IMenuEntries
             .Title(title)
             .AddChoices(GetDescriptions<TEnum>());
 
+    public MultiSelectionPrompt<string> GetSelectableMenuEntries<TEnum>(string title)
+        where TEnum : struct, Enum =>
+        new MultiSelectionPrompt<string>()
+            .Title(title)
+            .NotRequired()
+            .AddChoices(GetDescriptions<TEnum>());
+
     private static string[] GetDescriptions<TEnum>()
         where TEnum : struct, Enum =>
         Enum.GetValues<TEnum>()

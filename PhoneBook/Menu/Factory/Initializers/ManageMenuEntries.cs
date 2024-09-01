@@ -1,6 +1,7 @@
 ﻿using PhoneBook.Enums;
 using PhoneBook.Exceptions;
 using PhoneBook.Interfaces.Handlers;
+using PhoneBook.Interfaces.Menu;
 using PhoneBook.Interfaces.Menu.Command;
 using PhoneBook.Interfaces.Menu.Factory.Initializer;
 using PhoneBook.Interfaces.Repository;
@@ -15,12 +16,14 @@ internal sealed class ManageMenuEntries : IMenuEntriesInitializer<ManageMenu>
     private readonly IRepository<Contact> _contactRepository;
     private readonly IContactTableConstructor _contactTableConstructor;
     private readonly IContactsHandler _contactsHandler;
+    private readonly IMenuEntries _menuEntries;
     
-    public ManageMenuEntries(IRepository<Contact> contactRepository, IContactTableConstructor contactTableConstructor, IContactsHandler contactsHandler)
+    public ManageMenuEntries(IRepository<Contact> contactRepository, IContactTableConstructor contactTableConstructor, IContactsHandler contactsHandler, IMenuEntries menuEntries)
     {
         _contactRepository = contactRepository;
         _contactTableConstructor = contactTableConstructor;
         _contactsHandler = contactsHandler;
+        _menuEntries = menuEntries;
     }
     
     public Dictionary<ManageMenu, Func<ICommand>> InitializeEntries() =>

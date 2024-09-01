@@ -1,5 +1,7 @@
 ﻿using PhoneBook.Interfaces.Handlers;
 using PhoneBook.Interfaces.Services;
+using PhoneBook.Services;
+using Spectre.Console;
 
 namespace PhoneBook.Menu.Commands.ManageMenuCommands;
 
@@ -7,7 +9,8 @@ internal class EditContactCommand : DisplayingContactsCommand
 {
     private readonly IContactsHandler _contactsHandler;
     
-    public EditContactCommand(IContactsHandler contactsHandler, IContactTableConstructor contactTableConstructor) : base(contactsHandler, contactTableConstructor)
+    public EditContactCommand(IContactsHandler contactsHandler, IContactTableConstructor contactTableConstructor
+    ) : base(contactsHandler, contactTableConstructor)
     {
         _contactsHandler = contactsHandler;
     }
@@ -21,6 +24,13 @@ internal class EditContactCommand : DisplayingContactsCommand
             return;
         }
         
+        DisplayContact(contact);
+
+        _contactsHandler.UpdateContact(contact, out var updateMessage);
         
+        AnsiConsole.MarkupLine(updateMessage ?? UpdateCancelled);
+        HelperService.PressAnyKey();
     }
+
+    
 }

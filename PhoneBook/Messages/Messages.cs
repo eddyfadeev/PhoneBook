@@ -24,8 +24,21 @@ internal static class Messages
     #region General messages and options
 
     public const string BackOption = "Back";
+    public const string UpdateCancelled = "[red]Update cancelled.[/]";
+    public const string DeleteCancelled = "[red]Delete cancelled.[/]";
+    public const string UnknownOption = "[red]Unknown option[/]";
     public const string PressAnyKeyOption = "[white]Press any key to continue...[/]";
     public const string ReturningToPreviousMenu = "[white]Returning to previous menu.[/]";
 
+    #endregion
+    
+    #region Prompts
+
+    public const string AskName = "[white]Enter a name:[/]";
+    public const string AskLastName = "[white]Enter a last name:[/]";
+    public const string AskPhone = "[white]Enter a phone number:[/]";
+    public const string AskEmail = "[white]Enter an email:[/]";
+    public const string ContactsHandlerTitle = "Select contact from the list:";
+    
     #endregion
 }

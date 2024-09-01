@@ -26,16 +26,9 @@ internal class DeleteContactCommand : DisplayingContactsCommand
         
         DisplayContact(contact);
         
-        bool delete = AnsiConsole.Confirm("Are you sure you want to delete this contact?");
-
-        if (!delete)
-        {
-            return;
-        }
-        
         _contactsHandler.DeleteContact(contact, out var resultMessage);
         
-        AnsiConsole.MarkupLine(resultMessage);
+        AnsiConsole.MarkupLine(resultMessage ?? DeleteCancelled);
         HelperService.PressAnyKey();
     }
 }

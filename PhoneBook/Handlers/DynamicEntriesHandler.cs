@@ -1,20 +1,20 @@
 using PhoneBook.Interfaces.Handlers;
+using PhoneBook.Model;
 using Spectre.Console;
 
 namespace PhoneBook.Handlers;
 
-public class DynamicEntriesHandler : IDynamicEntriesHandler
+internal class DynamicEntriesHandler : IDynamicEntriesHandler
 {
-    public string HandleDynamicEntries(string title, params string[] entries) => 
+    public Contact HandleDynamicEntries(string title, params Contact[] entries) => 
         AnsiConsole.Prompt(GetSelectionPrompt(title, entries));
     
-    private static SelectionPrompt<string> GetSelectionPrompt(string title, params string[] entries)
+    private static SelectionPrompt<Contact> GetSelectionPrompt(string title, params Contact[] entries)
     {
-        var selectionPrompt = new SelectionPrompt<string>()
-            .Title(title)
-            .AddChoices(entries);
+        var selectionPrompt = new SelectionPrompt<Contact>()
+            .Title(title);
         
-        selectionPrompt.AddChoice(BackOption);
+        selectionPrompt.AddChoices(entries);
 
         return selectionPrompt;
     }
