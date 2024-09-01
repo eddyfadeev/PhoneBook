@@ -1,5 +1,3 @@
-using PhoneBook.Model;
-
 namespace PhoneBook.Interfaces.Handlers;
 
 internal interface IHandler<TEntity>
