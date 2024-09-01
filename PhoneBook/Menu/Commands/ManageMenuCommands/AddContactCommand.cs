@@ -1,36 +1,25 @@
-﻿using PhoneBook.Interfaces.Menu.Command;
-using PhoneBook.Interfaces.Repository;
+﻿using PhoneBook.Interfaces.Handlers;
+using PhoneBook.Interfaces.Menu.Command;
 using PhoneBook.Model;
+using PhoneBook.Services;
 using Spectre.Console;
 
 namespace PhoneBook.Menu.Commands.ManageMenuCommands;
 
 internal class AddContactCommand : ICommand
 {
-    private readonly IRepository<Contact> _contactRepository;
+    private readonly IHandler<Contact> _handler;
     
-    public AddContactCommand(IRepository<Contact> contactRepository)
+    public AddContactCommand(IHandler<Contact> handler)
     {
-        _contactRepository = contactRepository;
+        _handler = handler;
     }
     
     public void Execute()
     {
-        var name = AskUser("Enter name:");
-        var surname = AskUser("Enter surname:");
-        var phone = AskUser("Enter phone:");
-        var email = AskUser("Enter email:");
+        _handler.AddContact(out var message);
         
-        var contact = new Contact()
-        {
-            FirstName = name,
-            LastName = surname,
-            PhoneNumber = phone,
-            Email = email
-        };
-        _contactRepository.AddContact(contact);
+        AnsiConsole.MarkupLine(message ?? ProblemWithCommand);
+        HelperService.PressAnyKey();
     }
-    
-    private string AskUser(string message) => 
-        AnsiConsole.Ask<string>(message);
 }

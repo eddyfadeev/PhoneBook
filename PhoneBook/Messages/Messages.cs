@@ -38,7 +38,9 @@ internal static class Messages
     public const string AskLastName = "[white]Enter a last name:[/]";
     public const string AskPhone = "[white]Enter a phone number:[/]";
     public const string AskEmail = "[white]Enter an email:[/]";
-    public const string ContactsHandlerTitle = "Select contact from the list:";
+    public const string ContactsHandlerTitle = "[white]Select contact from the list:[/]";
+    public const string DeletePrompt = "[red]Delete contact?[/]";
+    public const string UpdatePrompt = "[red]Update contact?[/]";
     
     #endregion
 }

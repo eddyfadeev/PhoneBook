@@ -16,19 +16,19 @@ internal sealed class MainMenuEntries : IMenuEntriesInitializer<MainMenu>
 {
     private readonly MenuHandler<ManageMenu> _manageMenuHandler;
     private readonly MenuHandler<SearchMenu> _searchMenuHandler;
-    private readonly IContactsHandler _contactsHandler;
+    private readonly IHandler<Contact> _handler;
     private readonly IContactTableConstructor _contactTableConstructor;
 
     public MainMenuEntries(
         MenuHandler<ManageMenu> manageMenuHandler, 
         MenuHandler<SearchMenu> searchMenuHandler,
-        IContactsHandler contactsHandler,
+        IHandler<Contact> handler,
         IContactTableConstructor contactTableConstructor
         )
     {
         _manageMenuHandler = manageMenuHandler;
         _searchMenuHandler = searchMenuHandler;
-        _contactsHandler = contactsHandler;
+        _handler = handler;
         _contactTableConstructor = contactTableConstructor;
     }
     
@@ -36,7 +36,7 @@ internal sealed class MainMenuEntries : IMenuEntriesInitializer<MainMenu>
         new()
         {
             { MainMenu.SearchInContacts, () => new SearchInContactsCommand(_searchMenuHandler) },
-            { MainMenu.ViewAllContacts, () => new ViewAllContactsCommand(_contactsHandler, _contactTableConstructor) },
+            { MainMenu.ViewAllContacts, () => new ViewAllContactsCommand(_handler, _contactTableConstructor) },
             { MainMenu.ManageContacts, () => new ManageContactsCommand(_manageMenuHandler) },
             { MainMenu.Exit, () => throw new ExitApplication()}
         };

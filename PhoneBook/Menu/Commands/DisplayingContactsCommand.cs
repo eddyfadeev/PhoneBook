@@ -10,13 +10,10 @@ namespace PhoneBook.Menu.Commands;
 
 internal abstract class DisplayingContactsCommand : ICommand
 {
-    private readonly IContactsHandler _contactsHandler;
     private readonly IContactTableConstructor _contactTableConstructor;
 
-    protected DisplayingContactsCommand(IContactsHandler contactsHandler,
-        IContactTableConstructor contactTableConstructor)
+    protected DisplayingContactsCommand(IContactTableConstructor contactTableConstructor)
     {
-        _contactsHandler = contactsHandler;
         _contactTableConstructor = contactTableConstructor;
     }
 

@@ -61,7 +61,7 @@ internal static class DependenciesConfigurator
         services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<ManageMenu>>());
 
         services.AddTransient<IContactTableConstructor, ContactTableConstructor>();
-        services.AddTransient<IContactsHandler, ContactsHandler>();
+        services.AddTransient<IHandler<Contact>, ContactsHandler>();
     }
 
     private static IConfigurationBuilder GetConfiguration()

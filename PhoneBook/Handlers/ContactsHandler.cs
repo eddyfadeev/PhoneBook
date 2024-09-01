@@ -8,7 +8,7 @@ using Spectre.Console;
 
 namespace PhoneBook.Handlers;
 
-internal class ContactsHandler : IContactsHandler
+internal class ContactsHandler : IHandler<Contact>
 {
     private readonly IRepository<Contact> _contactRepository;
     private readonly IDynamicEntriesHandler _dynamicEntriesHandler;
@@ -41,33 +41,23 @@ internal class ContactsHandler : IContactsHandler
         message = ContactRetrieved;
     }
 
-    public void DeleteContact(Contact contact, out string? message)
+    public void AddContact(out string? message)
     {
-        const string deletePrompt = "Are you sure you want to delete the contact?";
+        var contact = CreateContact();
         
-        bool delete = ConfirmAction(deletePrompt);
+        var result = _contactRepository.AddContact(contact);
 
-        if (!delete)
-        {
-            message = default;
-            return;
-        }
-        
-        var result = _contactRepository.DeleteContact(contact);
-        
         message = result switch
         {
-            > 0 => ContactDeleted,
-            0 => ContactWasNotDeleted,
+            > 0 => ContactAdded,
+            0 => ContactWasNotAdded,
             _ => default
         };
     }
 
     public void UpdateContact(Contact contact, out string? message)
     {
-        const string updatePrompt = "Would you like to edit the contact?";
-        
-        bool update = ConfirmAction(updatePrompt);
+        bool update = ConfirmAction(UpdatePrompt);
 
         if (!update)
         {
@@ -88,6 +78,26 @@ internal class ContactsHandler : IContactsHandler
         {
             > 0 => ContactUpdated,
             0 => ContactWasNotUpdated,
+            _ => default
+        };
+    }
+    
+    public void DeleteContact(Contact contact, out string? message)
+    {
+        bool delete = ConfirmAction(DeletePrompt);
+
+        if (!delete)
+        {
+            message = default;
+            return;
+        }
+        
+        var result = _contactRepository.DeleteContact(contact);
+        
+        message = result switch
+        {
+            > 0 => ContactDeleted,
+            0 => ContactWasNotDeleted,
             _ => default
         };
     }
@@ -130,5 +140,18 @@ internal class ContactsHandler : IContactsHandler
                     break;
             }
         }
+    }
+
+    private static Contact CreateContact()
+    {
+        var contact = new Contact();
+        var createOptions = 
+            Enum.GetValues(typeof(ContactEditOptions))
+                .Cast<ContactEditOptions>()
+                .ToArray();
+        
+        UpdateContact(contact, createOptions);
+
+        return contact;
     }
 }
