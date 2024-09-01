@@ -15,7 +15,7 @@ internal class ContactDeleter : IContactDeleter
     }
     public void DeleteContact(Contact contact, out string? message)
     {
-        bool delete = HelperService.ConfirmAction(DeletePrompt);
+        bool delete = PromptService.ConfirmAction(DeletePrompt);
 
         if (!delete)
         {

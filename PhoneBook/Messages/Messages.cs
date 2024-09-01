@@ -35,12 +35,13 @@ internal static class Messages
                                              "+123456789012 or 1234567890[/] ";
     public const string InvalidEmailAddress = "[red]Invalid email address.[/]" +
                                               "[green]example@example.com[/]";
+    public const string NameIsRequired = "[red]Name is required.[/]";
     
     #endregion
     
     #region Prompts
-    public const string AskName = "[white]Enter a name:[/]";
-    public const string AskLastName = "[white]Enter a last name:[/]";
+    public const string AskFirstName = "[white]Enter a name:[/]";
+    public const string AskLastName = "[white]Enter a last name (or leave it empty):[/]";
     public const string AskPhone = "[white]Enter a phone number (or leave it empty):[/]";
     public const string AskEmail = "[white]Enter an email (or leave it empty):[/]";
     public const string ContactsHandlerTitle = "[white]Select contact from the list:[/]";

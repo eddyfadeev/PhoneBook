@@ -21,7 +21,7 @@ internal class ContactUpdater : IContactUpdater
     }
     public void UpdateContact(Contact contact, out string? message)
     {
-        bool update = HelperService.ConfirmAction(UpdatePrompt);
+        bool update = PromptService.ConfirmAction(UpdatePrompt);
 
         if (!update)
         {
@@ -34,7 +34,7 @@ internal class ContactUpdater : IContactUpdater
                 .Select(EnumExtensions.GetEnumValueFromDescription<ContactEditOptions>)
                 .ToArray();
 
-        HelperService.AskPromptResolver(contact, requestedChanges);
+        PromptService.PromptStrategyResolver(contact, requestedChanges);
         
         var result = _contactRepository.UpdateContact(contact);
 

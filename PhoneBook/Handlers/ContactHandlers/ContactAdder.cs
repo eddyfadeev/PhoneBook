@@ -37,7 +37,7 @@ internal class ContactAdder : IContactAdder
                 .Cast<ContactEditOptions>()
                 .ToArray();
         
-        HelperService.AskPromptResolver(contact, createOptions);
+        PromptService.PromptStrategyResolver(contact, createOptions);
 
         return contact;
     }

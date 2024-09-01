@@ -44,22 +44,18 @@ internal static class DependenciesConfigurator
         services.AddSingleton<IRepository<Contact>, ContactRepository>();
         
         services.AddTransient<IMenuEntriesInitializer<MainMenu>, MainMenuEntries>();
-        services.AddTransient<IMenuEntriesInitializer<SearchMenu>, SearchMenuEntries>();
         services.AddTransient<IMenuEntriesInitializer<ManageMenu>, ManageMenuEntries>();
 
         services.AddTransient<IMenuCommandsFactory<MainMenu>, MenuCommandsFactory<MainMenu>>();
-        services.AddTransient<IMenuCommandsFactory<SearchMenu>, MenuCommandsFactory<SearchMenu>>();
         services.AddTransient<IMenuCommandsFactory<ManageMenu>, MenuCommandsFactory<ManageMenu>>();
 
         services.AddTransient<IMenuEntries, MenuEntries>();
         services.AddTransient<IDynamicEntriesHandler, DynamicEntriesHandler>();
 
         services.AddSingleton<MenuHandler<MainMenu>>();
-        services.AddSingleton<MenuHandler<SearchMenu>>();
         services.AddSingleton<MenuHandler<ManageMenu>>();
         
         services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<MainMenu>>());
-        services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<SearchMenu>>());
         services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<ManageMenu>>());
 
         services.AddTransient<IContactTableConstructor, ContactTableConstructor>();
