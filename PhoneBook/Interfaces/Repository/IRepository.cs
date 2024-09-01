@@ -6,5 +6,5 @@ internal interface IRepository<TEntity>
     int UpdateContact(TEntity entity);
     int DeleteContact(TEntity entity);
     TEntity? GetContact(int id);
-    List<TEntity> GetAllContacts();
+    TEntity[] GetAllContacts();
 }

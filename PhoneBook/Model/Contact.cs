@@ -11,5 +11,10 @@ internal class Contact : IContact
     public string? Email { get; set; }
     
     public override string ToString() => 
-        $"Id: {Id}, Name: {FirstName} {LastName}, Phone: {PhoneNumber}, Email: {Email}";
+        $"""
+         Name: {FirstName} {LastName}
+           Phone: {PhoneNumber}
+           Email: {Email}
+           
+         """;
 }

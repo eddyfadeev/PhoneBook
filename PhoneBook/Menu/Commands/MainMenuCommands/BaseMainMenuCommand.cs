@@ -1,18 +1,17 @@
-﻿using PhoneBook.Interfaces.Handlers;
+using PhoneBook.Interfaces.Handlers;
 using PhoneBook.Interfaces.Menu.Command;
 
 namespace PhoneBook.Menu.Commands.MainMenuCommands;
 
-internal sealed class SearchInContactsCommand : ICommand
+public abstract class BaseMainMenuCommand : ICommand
 {
     private readonly IMenuHandler _menuHandler;
-    
-    public SearchInContactsCommand(IMenuHandler menuHandler)
+    protected BaseMainMenuCommand(IMenuHandler menuHandler)
     {
         _menuHandler = menuHandler;
     }
-    
-    public void Execute()
+
+    public virtual void Execute()
     {
         _menuHandler.HandleMenu();
     }

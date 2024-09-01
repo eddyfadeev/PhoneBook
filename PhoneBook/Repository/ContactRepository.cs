@@ -44,10 +44,10 @@ internal class ContactRepository : IRepository<Contact>
         return connection.Contacts.Find(id);
     }
 
-    public List<Contact> GetAllContacts()
+    public Contact[] GetAllContacts()
     {
         using var connection = _databaseManager.GetConnection();
         
-        return connection.Contacts.ToList();
+        return connection.Contacts.ToArray();
     }
 }

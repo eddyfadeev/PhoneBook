@@ -24,6 +24,7 @@ internal static class Program
     {
         while (true)
         {
+            Console.Clear();
             try
             {
                 menuHandler.HandleMenu();

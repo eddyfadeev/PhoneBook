@@ -1,19 +1,11 @@
-﻿using PhoneBook.Interfaces.Handlers;
-using PhoneBook.Interfaces.Menu.Command;
+﻿using PhoneBook.Enums;
+using PhoneBook.Handlers;
 
 namespace PhoneBook.Menu.Commands.MainMenuCommands;
 
-internal sealed class ManageContactsCommand : ICommand
+internal sealed class ManageContactsCommand : BaseMainMenuCommand
 {
-    private readonly IMenuHandler _menuHandler;
-    
-    public ManageContactsCommand(IMenuHandler menuHandler)
+    public ManageContactsCommand(MenuHandler<ManageMenu> menuHandler) : base(menuHandler)
     {
-        _menuHandler = menuHandler;
-    }
-    
-    public void Execute()
-    {
-        _menuHandler.HandleMenu();
     }
 }

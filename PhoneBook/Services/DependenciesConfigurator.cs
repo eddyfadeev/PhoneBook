@@ -4,14 +4,17 @@ using PhoneBook.Database;
 using PhoneBook.Database.ContactContext;
 using PhoneBook.Enums;
 using PhoneBook.Handlers;
+using PhoneBook.Handlers.ContactHandlers;
 using PhoneBook.Interfaces.Database;
 using PhoneBook.Interfaces.Handlers;
+using PhoneBook.Interfaces.Handlers.ContactHandlers;
 using PhoneBook.Interfaces.Menu;
 using PhoneBook.Interfaces.Menu.Factory;
 using PhoneBook.Interfaces.Menu.Factory.Initializer;
 using PhoneBook.Interfaces.Repository;
 using PhoneBook.Interfaces.Services;
 using PhoneBook.Menu;
+using PhoneBook.Menu.Commands.ManageMenuCommands;
 using PhoneBook.Menu.Factory;
 using PhoneBook.Menu.Factory.Initializers;
 using PhoneBook.Model;
@@ -41,25 +44,26 @@ internal static class DependenciesConfigurator
         services.AddSingleton<IRepository<Contact>, ContactRepository>();
         
         services.AddTransient<IMenuEntriesInitializer<MainMenu>, MainMenuEntries>();
-        services.AddTransient<IMenuEntriesInitializer<SearchMenu>, SearchMenuEntries>();
         services.AddTransient<IMenuEntriesInitializer<ManageMenu>, ManageMenuEntries>();
 
         services.AddTransient<IMenuCommandsFactory<MainMenu>, MenuCommandsFactory<MainMenu>>();
-        services.AddTransient<IMenuCommandsFactory<SearchMenu>, MenuCommandsFactory<SearchMenu>>();
         services.AddTransient<IMenuCommandsFactory<ManageMenu>, MenuCommandsFactory<ManageMenu>>();
 
         services.AddTransient<IMenuEntries, MenuEntries>();
         services.AddTransient<IDynamicEntriesHandler, DynamicEntriesHandler>();
 
         services.AddSingleton<MenuHandler<MainMenu>>();
-        services.AddSingleton<MenuHandler<SearchMenu>>();
         services.AddSingleton<MenuHandler<ManageMenu>>();
         
         services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<MainMenu>>());
-        services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<SearchMenu>>());
         services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<ManageMenu>>());
 
         services.AddTransient<IContactTableConstructor, ContactTableConstructor>();
+
+        services.AddTransient<IContactSelector, ContactSelector>();
+        services.AddTransient<IContactAdder, ContactAdder>();
+        services.AddTransient<IContactUpdater, ContactUpdater>();
+        services.AddTransient<IContactDeleter, ContactDeleter>();
     }
 
     private static IConfigurationBuilder GetConfiguration()

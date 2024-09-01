@@ -1,6 +1,8 @@
+using PhoneBook.Model;
+
 namespace PhoneBook.Interfaces.Handlers;
 
 internal interface IDynamicEntriesHandler
 {
-    string HandleDynamicEntries(string title, params string[] entries);
+    Contact HandleDynamicEntries(string title, params Contact[] entries);
 }
