@@ -22,6 +22,6 @@ internal class DatabaseManager : IDatabaseManager
         using var connection = GetConnection();
         
         // TODO: You might don't need a bool, just catch the exception if any problem arise
-        var result = connection.Database.EnsureCreated();
+        connection.Database.EnsureCreated();
     }
 }
