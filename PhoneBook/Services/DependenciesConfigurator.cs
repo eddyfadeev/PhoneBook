@@ -4,8 +4,10 @@ using PhoneBook.Database;
 using PhoneBook.Database.ContactContext;
 using PhoneBook.Enums;
 using PhoneBook.Handlers;
+using PhoneBook.Handlers.ContactHandlers;
 using PhoneBook.Interfaces.Database;
 using PhoneBook.Interfaces.Handlers;
+using PhoneBook.Interfaces.Handlers.ContactHandlers;
 using PhoneBook.Interfaces.Menu;
 using PhoneBook.Interfaces.Menu.Factory;
 using PhoneBook.Interfaces.Menu.Factory.Initializer;
@@ -61,7 +63,11 @@ internal static class DependenciesConfigurator
         services.AddSingleton<IMenuHandler>(provider => provider.GetRequiredService<MenuHandler<ManageMenu>>());
 
         services.AddTransient<IContactTableConstructor, ContactTableConstructor>();
-        services.AddTransient<IHandler<Contact>, ContactsHandler>();
+
+        services.AddTransient<IContactSelector, ContactSelector>();
+        services.AddTransient<IContactAdder, ContactAdder>();
+        services.AddTransient<IContactUpdater, ContactUpdater>();
+        services.AddTransient<IContactDeleter, ContactDeleter>();
     }
 
     private static IConfigurationBuilder GetConfiguration()

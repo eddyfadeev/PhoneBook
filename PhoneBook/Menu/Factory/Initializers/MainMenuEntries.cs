@@ -2,6 +2,7 @@
 using PhoneBook.Exceptions;
 using PhoneBook.Handlers;
 using PhoneBook.Interfaces.Handlers;
+using PhoneBook.Interfaces.Handlers.ContactHandlers;
 using PhoneBook.Interfaces.Menu.Command;
 using PhoneBook.Interfaces.Menu.Factory.Initializer;
 using PhoneBook.Interfaces.Repository;
@@ -16,19 +17,19 @@ internal sealed class MainMenuEntries : IMenuEntriesInitializer<MainMenu>
 {
     private readonly MenuHandler<ManageMenu> _manageMenuHandler;
     private readonly MenuHandler<SearchMenu> _searchMenuHandler;
-    private readonly IHandler<Contact> _handler;
+    private readonly IContactSelector _contactSelector;
     private readonly IContactTableConstructor _contactTableConstructor;
 
     public MainMenuEntries(
         MenuHandler<ManageMenu> manageMenuHandler, 
         MenuHandler<SearchMenu> searchMenuHandler,
-        IHandler<Contact> handler,
+        IContactSelector contactSelector,
         IContactTableConstructor contactTableConstructor
         )
     {
         _manageMenuHandler = manageMenuHandler;
         _searchMenuHandler = searchMenuHandler;
-        _handler = handler;
+        _contactSelector = contactSelector;
         _contactTableConstructor = contactTableConstructor;
     }
     
@@ -36,7 +37,7 @@ internal sealed class MainMenuEntries : IMenuEntriesInitializer<MainMenu>
         new()
         {
             { MainMenu.SearchInContacts, () => new SearchInContactsCommand(_searchMenuHandler) },
-            { MainMenu.ViewAllContacts, () => new ViewAllContactsCommand(_handler, _contactTableConstructor) },
+            { MainMenu.ViewAllContacts, () => new ViewAllContactsCommand(_contactSelector, _contactTableConstructor) },
             { MainMenu.ManageContacts, () => new ManageContactsCommand(_manageMenuHandler) },
             { MainMenu.Exit, () => throw new ExitApplication()}
         };

@@ -1,25 +1,24 @@
-﻿using PhoneBook.Interfaces.Handlers;
+﻿using PhoneBook.Interfaces.Handlers.ContactHandlers;
 using PhoneBook.Interfaces.Services;
-using PhoneBook.Model;
 using PhoneBook.Services;
 
 namespace PhoneBook.Menu.Commands.MainMenuCommands;
 
 internal sealed class ViewAllContactsCommand : DisplayingContactsCommand
 {
-    private readonly IHandler<Contact> _handler;
+    private readonly IContactSelector _contactSelector;
     
     public ViewAllContactsCommand(
-        IHandler<Contact> handler,
+        IContactSelector contactSelector,
         IContactTableConstructor contactTableConstructor
         ) : base(contactTableConstructor)
     {
-        _handler = handler;
+        _contactSelector = contactSelector;
     }
     
     public override void Execute()
     {
-        _handler.SelectContact(out var contact, out var message);
+        _contactSelector.SelectContact(out var contact, out var message);
 
         if (ContactIsNull(contact, message))
         {

@@ -1,4 +1,5 @@
 ﻿using PhoneBook.Interfaces.Handlers;
+using PhoneBook.Interfaces.Handlers.ContactHandlers;
 using PhoneBook.Interfaces.Services;
 using PhoneBook.Model;
 using PhoneBook.Services;
@@ -8,17 +9,22 @@ namespace PhoneBook.Menu.Commands.ManageMenuCommands;
 
 internal class DeleteContactCommand : DisplayingContactsCommand
 {
-    private readonly IHandler<Contact> _handler;
+    private readonly IContactSelector _contactSelector;
+    private readonly IContactDeleter _contactDeleter;
     
-    public DeleteContactCommand(IHandler<Contact> handler, IContactTableConstructor contactTableConstructor) : 
+    public DeleteContactCommand(
+        IContactSelector contactSelector, 
+        IContactDeleter contactDeleter,
+        IContactTableConstructor contactTableConstructor) : 
         base(contactTableConstructor)
     {
-        _handler = handler;
+        _contactSelector = contactSelector;
+        _contactDeleter = contactDeleter;
     }
 
     public override void Execute()
     {
-        _handler.SelectContact(out var contact, out var message);
+        _contactSelector.SelectContact(out var contact, out var message);
 
         if (ContactIsNull(contact, message))
         {
@@ -27,7 +33,7 @@ internal class DeleteContactCommand : DisplayingContactsCommand
         
         DisplayContact(contact);
         
-        _handler.DeleteContact(contact, out var resultMessage);
+        _contactDeleter.DeleteContact(contact, out string? resultMessage);
         
         AnsiConsole.MarkupLine(resultMessage ?? DeleteCancelled);
         HelperService.PressAnyKey();

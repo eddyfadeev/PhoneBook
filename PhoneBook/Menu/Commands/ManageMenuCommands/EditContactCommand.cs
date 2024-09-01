@@ -1,4 +1,5 @@
 ﻿using PhoneBook.Interfaces.Handlers;
+using PhoneBook.Interfaces.Handlers.ContactHandlers;
 using PhoneBook.Interfaces.Services;
 using PhoneBook.Model;
 using PhoneBook.Services;
@@ -8,17 +9,22 @@ namespace PhoneBook.Menu.Commands.ManageMenuCommands;
 
 internal class EditContactCommand : DisplayingContactsCommand
 {
-    private readonly IHandler<Contact> _handler;
+    private readonly IContactSelector _contactSelector;
+    private readonly IContactUpdater _contactUpdater;
     
-    public EditContactCommand(IHandler<Contact> handler, IContactTableConstructor contactTableConstructor
+    public EditContactCommand(
+        IContactSelector contactSelector, 
+        IContactUpdater contactUpdater,
+        IContactTableConstructor contactTableConstructor
     ) : base(contactTableConstructor)
     {
-        _handler = handler;
+        _contactSelector = contactSelector;
+        _contactUpdater = contactUpdater;
     }
 
     public override void Execute()
     {
-        _handler.SelectContact(out var contact, out var message);
+        _contactSelector.SelectContact(out var contact, out var message);
 
         if (ContactIsNull(contact, message))
         {
@@ -27,7 +33,7 @@ internal class EditContactCommand : DisplayingContactsCommand
         
         DisplayContact(contact);
 
-        _handler.UpdateContact(contact, out var updateMessage);
+        _contactUpdater.UpdateContact(contact, out var updateMessage);
         
         AnsiConsole.MarkupLine(updateMessage ?? UpdateCancelled);
         HelperService.PressAnyKey();

@@ -1,6 +1,5 @@
-﻿using PhoneBook.Interfaces.Handlers;
+﻿using PhoneBook.Interfaces.Handlers.ContactHandlers;
 using PhoneBook.Interfaces.Menu.Command;
-using PhoneBook.Model;
 using PhoneBook.Services;
 using Spectre.Console;
 
@@ -8,16 +7,16 @@ namespace PhoneBook.Menu.Commands.ManageMenuCommands;
 
 internal class AddContactCommand : ICommand
 {
-    private readonly IHandler<Contact> _handler;
+    private readonly IContactAdder _contactAdder;
     
-    public AddContactCommand(IHandler<Contact> handler)
+    public AddContactCommand(IContactAdder contactAdder)
     {
-        _handler = handler;
+        _contactAdder = contactAdder;
     }
     
     public void Execute()
     {
-        _handler.AddContact(out var message);
+        _contactAdder.AddContact(out var message);
         
         AnsiConsole.MarkupLine(message ?? ProblemWithCommand);
         HelperService.PressAnyKey();
