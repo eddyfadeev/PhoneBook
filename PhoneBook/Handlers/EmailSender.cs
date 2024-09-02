@@ -8,6 +8,11 @@ using Spectre.Console;
 
 namespace PhoneBook.Handlers;
 
+/// <summary>
+/// The EmailSender class is responsible for sending emails to contacts.
+/// It uses an IEmailManager to manage the email sending process and an IConfiguration
+/// to retrieve email credentials.
+/// </summary>
 internal class EmailSender : IEmailSender
 {
     private readonly IEmailManager _emailManager;
@@ -22,6 +27,10 @@ internal class EmailSender : IEmailSender
         _email = configuration.GetSection(section)[emailSubsection]!;
     }
 
+    /// <summary>
+    /// Sends an email to the specified contact.
+    /// </summary>
+    /// <param name="contact">The contact to whom the email will be sent.</param>
     public void SendEmail(Contact contact)
     {
         AskForText(out string subject, out string body);

@@ -9,6 +9,9 @@ using Spectre.Console;
 
 namespace PhoneBook.Handlers.ContactHandlers;
 
+/// <summary>
+/// ContactUpdater is responsible for updating a contact in the repository.
+/// </summary>
 internal class ContactUpdater : IContactUpdater
 {
     private readonly IRepository<Contact> _contactRepository;
@@ -19,6 +22,12 @@ internal class ContactUpdater : IContactUpdater
         _contactRepository = contactRepository;
         _menuEntries = menuEntries;
     }
+
+    /// <summary>
+    /// Updates the specified contact and returns a status message indicating the result of the operation.
+    /// </summary>
+    /// <param name="contact">The contact to be updated.</param>
+    /// <param name="message">An output parameter that holds the result message of the update operation.</param>
     public void UpdateContact(Contact contact, out string? message)
     {
         bool update = PromptService.ConfirmAction(UpdatePrompt);

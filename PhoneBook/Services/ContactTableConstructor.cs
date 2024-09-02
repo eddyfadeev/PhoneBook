@@ -5,8 +5,12 @@ using Spectre.Console;
 
 namespace PhoneBook.Services;
 
+/// <summary>
+/// Concrete implementation of <see cref="IContactTableConstructor"/>
+/// </summary>
 internal class ContactTableConstructor : IContactTableConstructor
 {
+    /// <inheritdoc cref="IContactTableConstructor.CreateContactTable"/>
     public Table CreateContactTable(Contact contact)
     {
         var table = CreateTable();

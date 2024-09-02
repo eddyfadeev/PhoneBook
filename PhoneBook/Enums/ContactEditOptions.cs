@@ -2,6 +2,9 @@ using System.ComponentModel;
 
 namespace PhoneBook.Enums;
 
+/// <summary>
+/// Enum with the editable contact properties available in the phone book.
+/// </summary>
 internal enum ContactEditOptions
 {
     [Description("First Name")]

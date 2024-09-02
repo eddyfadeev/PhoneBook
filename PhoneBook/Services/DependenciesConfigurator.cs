@@ -23,6 +23,9 @@ using PhoneBook.Repository;
 
 namespace PhoneBook.Services;
 
+/// <summary>
+/// Configures various dependencies for the DI
+/// </summary>
 internal static class DependenciesConfigurator
 {
     private const string JsonFileName = "appsettings.json";

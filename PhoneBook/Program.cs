@@ -18,7 +18,6 @@ internal static class Program
         var menuHandler = serviceProvider.GetRequiredService<MenuHandler<MainMenu>>();
         
         Start(menuHandler);
-
     }
 
     private static void Start(IMenuHandler menuHandler)
@@ -30,11 +29,11 @@ internal static class Program
             {
                 menuHandler.HandleMenu();
             }
-            catch (ReturnToMainMenu e)
+            catch (ReturnToMainMenuException e)
             {
                 // Do nothing
             }
-            catch (ExitApplication e)
+            catch (ExitApplicationException e)
             {
                 AnsiConsole.MarkupLine(e.Message);
                 break;

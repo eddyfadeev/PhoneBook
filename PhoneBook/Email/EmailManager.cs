@@ -5,6 +5,9 @@ using Spectre.Console;
 
 namespace PhoneBook.Email;
 
+/// <summary>
+/// Manages email sending operations using the configuration provided.
+/// </summary>
 internal class EmailManager : IEmailManager
 {
     private const string CredentialsSection = "EmailCredentials";
@@ -31,8 +34,16 @@ internal class EmailManager : IEmailManager
         _password = ConfigurePassword();
     }
 
+    /// <summary>
+    /// Creates and configures a new instance of the <see cref="SmtpClient"/> class
+    /// using the server address, port, login credentials, and SSL settings defined
+    /// in the <see cref="EmailManager"/> configuration.
+    /// </summary>
+    /// <returns>
+    /// A fully configured <see cref="SmtpClient"/> instance ready for sending emails.
+    /// </returns>
     public SmtpClient GetSmtpClient() =>
-        new ()
+        new()
         {
             Host = _serverAddress,
             Port = _port,

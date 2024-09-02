@@ -30,7 +30,12 @@ internal sealed class ViewAllContactsCommand : DisplayingContactsCommand
         }
         
         DisplayContact(contact);
-        _emailSender.SendEmail(contact);
+
+        bool sendAnEmail = PromptService.ConfirmAction(SendAnEmail);
+        if (sendAnEmail)
+        {
+            _emailSender.SendEmail(contact);
+        }
 
         HelperService.PressAnyKey();
     }

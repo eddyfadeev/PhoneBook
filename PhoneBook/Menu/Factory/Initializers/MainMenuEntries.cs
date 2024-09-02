@@ -35,6 +35,6 @@ internal sealed class MainMenuEntries : IMenuEntriesInitializer<MainMenu>
         {
             { MainMenu.ViewAllContacts, () => new ViewAllContactsCommand(_contactSelector, _contactTableConstructor, _emailSender) },
             { MainMenu.ManageContacts, () => new ManageContactsCommand(_manageMenuHandler) },
-            { MainMenu.Exit, () => throw new ExitApplication()}
+            { MainMenu.Exit, () => throw new ExitApplicationException()}
         };
 }

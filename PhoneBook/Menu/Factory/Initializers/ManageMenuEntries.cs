@@ -1,12 +1,10 @@
 ﻿using PhoneBook.Enums;
 using PhoneBook.Exceptions;
-using PhoneBook.Interfaces.Handlers;
 using PhoneBook.Interfaces.Handlers.ContactHandlers;
 using PhoneBook.Interfaces.Menu.Command;
 using PhoneBook.Interfaces.Menu.Factory.Initializer;
 using PhoneBook.Interfaces.Services;
 using PhoneBook.Menu.Commands.ManageMenuCommands;
-using PhoneBook.Model;
 
 namespace PhoneBook.Menu.Factory.Initializers;
 
@@ -39,6 +37,6 @@ internal sealed class ManageMenuEntries : IMenuEntriesInitializer<ManageMenu>
             { ManageMenu.Add, () => new AddContactCommand(_contactAdder) },
             { ManageMenu.Edit, () => new EditContactCommand(_contactSelector, _contactUpdater, _contactTableConstructor) },
             { ManageMenu.Delete, () => new DeleteContactCommand(_contactSelector, _contactDeleter, _contactTableConstructor) },
-            { ManageMenu.Back, () => throw new ReturnToMainMenu() }
+            { ManageMenu.Back, () => throw new ReturnToMainMenuException() }
         };
 }
