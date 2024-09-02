@@ -11,5 +11,7 @@ internal enum ContactEditOptions
     [Description("Phone Number")]
     Phone,
     [Description("Email Address")]
-    Email
+    Email,
+    [Description("Group Name")]
+    Group,
 }

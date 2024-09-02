@@ -14,7 +14,8 @@ internal static class PromptService
             { ContactEditOptions.FirstName, new FirstNameEditStrategy() },
             { ContactEditOptions.LastName, new LastNameEditStrategy() },
             { ContactEditOptions.Phone, new PhoneEditStrategy() },
-            { ContactEditOptions.Email, new EmailEditStrategy() }
+            { ContactEditOptions.Email, new EmailEditStrategy() },
+            { ContactEditOptions.Group, new GroupNameEditStrategy() }
         };
 
     public static void PromptStrategyResolver(Contact contact, params ContactEditOptions[] options)

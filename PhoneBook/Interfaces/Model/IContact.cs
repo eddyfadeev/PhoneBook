@@ -7,4 +7,5 @@ internal interface IContact
     string? LastName { get; set; }
     string? PhoneNumber { get; set; }
     string? Email { get; set; }
+    string? Group  { get; set; }
 }
