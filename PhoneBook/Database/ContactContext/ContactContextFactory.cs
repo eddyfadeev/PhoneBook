@@ -14,8 +14,8 @@ internal class ContactContextFactory : IDesignTimeDbContextFactory<ContactContex
             .AddJsonFile("appsettings.json")
             .Build();
         
-        var optionsBuilder = new DbContextOptionsBuilder<Database.ContactContext.ContactContext>();
-        var connectionString = configuration.GetConnectionString(DefaultConnection);
+        var optionsBuilder = new DbContextOptionsBuilder<ContactContext>();
+        string? connectionString = configuration.GetConnectionString(DefaultConnection);
         optionsBuilder.UseSqlServer(connectionString);
 
         return new ContactContext(configuration);

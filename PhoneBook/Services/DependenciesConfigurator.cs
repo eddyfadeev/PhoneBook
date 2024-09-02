@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using PhoneBook.Database;
 using PhoneBook.Database.ContactContext;
+using PhoneBook.Email;
 using PhoneBook.Enums;
 using PhoneBook.Handlers;
 using PhoneBook.Handlers.ContactHandlers;
@@ -39,6 +40,9 @@ internal static class DependenciesConfigurator
     {
         services.AddSingleton<IConfiguration>(Configuration);
         services.AddDbContext<ContactContext>();
+
+        services.AddTransient<IEmailManager, EmailManager>();
+        services.AddTransient<IEmailSender, EmailSender>();
         
         services.AddSingleton<IDatabaseManager, DatabaseManager>();
         services.AddSingleton<IRepository<Contact>, ContactRepository>();
