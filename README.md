@@ -20,7 +20,7 @@ The PhoneBook application is structured into several primary modules:
 10. **Migrations**: Manages database migrations for maintaining the database schema.
 
 ## Diagram
-![alt text](https://github.com/eddyfadeev/DrinksInfo/blob/master/PhoneBook_diagram.png?raw=true)
+![alt text](https://github.com/eddyfadeev/PhoneBook/blob/master/PhoneBook_diagram.png?raw=true)
 
 ## Key Components
 
