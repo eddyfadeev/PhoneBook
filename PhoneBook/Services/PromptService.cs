@@ -34,4 +34,14 @@ internal static class PromptService
     }
     
     public static bool ConfirmAction(string prompt) => AnsiConsole.Confirm(prompt);
+    
+    public static string PromptForMessage(string whatToAsk)
+    {
+        var prompt = new TextPrompt<string>(whatToAsk)
+        {
+            AllowEmpty = true
+        };
+        
+        return AnsiConsole.Prompt(prompt);
+    }
 }

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using PhoneBook.Email;
 using PhoneBook.Interfaces.Handlers;
 using PhoneBook.Model;
+using PhoneBook.Services;
 using Spectre.Console;
 
 namespace PhoneBook.Handlers;
@@ -15,22 +16,22 @@ internal class EmailSender : IEmailSender
     public EmailSender(IEmailManager emailManager, IConfiguration configuration)
     {
         const string section = "EmailCredentials";
-        const string emailSubsection = "Email";
+        const string emailSubsection = "Login";
         
         _emailManager = emailManager;
-        _email = configuration.GetSection(section)[emailSubsection];
+        _email = configuration.GetSection(section)[emailSubsection]!;
     }
 
     public void SendEmail(Contact contact)
     {
-        string subject = PromptForInput("Enter a subject: ");
-        string body = PromptForInput("Enter a message: ");
+        AskForText(out string subject, out string body);
         var email = ComposeEmail(contact, subject, body);
 
         try
         {
             using var client = _emailManager.GetSmtpClient();
             client.Send(email);
+            AnsiConsole.MarkupLine(MessageWasSuccessfullySent);
         }
         catch (SmtpException e)
         {
@@ -44,15 +45,11 @@ internal class EmailSender : IEmailSender
             AnsiConsole.WriteException(e);
         }
     }
-
-    private static string PromptForInput(string whatToAsk)
+    
+    private static void AskForText(out string subject, out string body)
     {
-        var prompt = new TextPrompt<string>(whatToAsk)
-        {
-            AllowEmpty = true
-        };
-        
-        return AnsiConsole.Prompt(prompt);
+        subject = PromptService.PromptForMessage(EnterSubject);
+        body = PromptService.PromptForMessage(EnterMessage);
     }
 
     private MailMessage ComposeEmail(Contact contact, string subject, string body) =>

@@ -1,4 +1,5 @@
-﻿using PhoneBook.Interfaces.Handlers.ContactHandlers;
+﻿using PhoneBook.Interfaces.Handlers;
+using PhoneBook.Interfaces.Handlers.ContactHandlers;
 using PhoneBook.Interfaces.Services;
 using PhoneBook.Services;
 
@@ -7,13 +8,16 @@ namespace PhoneBook.Menu.Commands.MainMenuCommands;
 internal sealed class ViewAllContactsCommand : DisplayingContactsCommand
 {
     private readonly IContactSelector _contactSelector;
+    private readonly IEmailSender _emailSender;
     
     public ViewAllContactsCommand(
         IContactSelector contactSelector,
-        IContactTableConstructor contactTableConstructor
+        IContactTableConstructor contactTableConstructor,
+        IEmailSender emailSender
         ) : base(contactTableConstructor)
     {
         _contactSelector = contactSelector;
+        _emailSender = emailSender;
     }
     
     public override void Execute()
@@ -26,6 +30,7 @@ internal sealed class ViewAllContactsCommand : DisplayingContactsCommand
         }
         
         DisplayContact(contact);
+        _emailSender.SendEmail(contact);
 
         HelperService.PressAnyKey();
     }

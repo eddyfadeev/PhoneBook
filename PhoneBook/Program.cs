@@ -42,6 +42,7 @@ internal static class Program
             catch (Exception e)
             {
                 AnsiConsole.MarkupLine(e.Message);
+                HelperService.PressAnyKey();
             }
         }
         

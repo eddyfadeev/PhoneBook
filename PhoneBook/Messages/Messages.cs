@@ -16,26 +16,24 @@ internal static class Messages
     #endregion
 
     #region Database and other problems
-    public const string ContactNotFound = "[red]Contact not found.[/]";
     public const string NoContactsInTheDatabase = "[red]No contacts found.[/]";
     public const string ProblemWithCommand = "[red]Problem executing command.[/]";
     #endregion
     
     #region General messages and options
 
-    public const string BackOption = "Back";
     public const string UpdateCancelled = "[red]Update cancelled.[/]";
     public const string DeleteCancelled = "[red]Delete cancelled.[/]";
-    public const string UnknownOption = "[red]Unknown option[/]";
     public const string PressAnyKeyOption = "[white]Press any key to continue...[/]";
-    public const string ReturningToPreviousMenu = "[white]Returning to previous menu.[/]";
     
     public const string InvalidPhoneNumber = "[red]Invalid phone number.[/]\n" +
                                              "[green]Phone shoild be 10-12 digits long.\n" +
                                              "+123456789012 or 1234567890[/] ";
     public const string InvalidEmailAddress = "[red]Invalid email address.[/]" +
                                               "[green]example@example.com[/]";
+    
     public const string NameIsRequired = "[red]Name is required.[/]";
+    public const string MessageWasSuccessfullySent = "[green]Message sent.[/]";
     
     #endregion
     
@@ -48,7 +46,8 @@ internal static class Messages
     public const string ContactsHandlerTitle = "[white]Select contact from the list:[/]";
     public const string DeletePrompt = "[red]Delete contact?[/]";
     public const string UpdatePrompt = "[red]Update contact?[/]";
-    public const string LeaveEmpty = "[red]Leave it empty?[/]";
-    
+    public const string EnterSubject = "Enter a subject: ";
+    public const string EnterMessage = "Enter a message: ";
+
     #endregion
 }
