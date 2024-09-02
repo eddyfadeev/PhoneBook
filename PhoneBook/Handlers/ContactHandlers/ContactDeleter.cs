@@ -5,7 +5,10 @@ using PhoneBook.Services;
 
 namespace PhoneBook.Handlers.ContactHandlers;
 
-internal class ContactDeleter : IContactDeleter
+/// <summary>
+/// The ContactDeleter class handles the deletion of contacts from the repository.
+/// </summary>
+internal sealed class ContactDeleter : IContactDeleter
 {
     private readonly IRepository<Contact> _contactRepository;
 
@@ -13,6 +16,12 @@ internal class ContactDeleter : IContactDeleter
     {
         _contactRepository = contactRepository;
     }
+
+    /// <summary>
+    /// Deletes a contact from the repository, prompting the user for confirmation.
+    /// </summary>
+    /// <param name="contact">The contact to be deleted.</param>
+    /// <param name="message">An output parameter that will contain a message indicating the result of the delete operation.</param>
     public void DeleteContact(Contact contact, out string? message)
     {
         bool delete = PromptService.ConfirmAction(DeletePrompt);

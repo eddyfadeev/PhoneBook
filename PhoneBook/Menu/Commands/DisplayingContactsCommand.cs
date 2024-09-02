@@ -1,7 +1,5 @@
-using PhoneBook.Interfaces.Handlers;
 using PhoneBook.Interfaces.Menu.Command;
 using PhoneBook.Interfaces.Services;
-using PhoneBook.Menu.Commands.ManageMenuCommands;
 using PhoneBook.Model;
 using PhoneBook.Services;
 using Spectre.Console;

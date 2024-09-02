@@ -1,7 +1,5 @@
-﻿using PhoneBook.Interfaces.Handlers;
-using PhoneBook.Interfaces.Handlers.ContactHandlers;
+﻿using PhoneBook.Interfaces.Handlers.ContactHandlers;
 using PhoneBook.Interfaces.Services;
-using PhoneBook.Model;
 using PhoneBook.Services;
 using Spectre.Console;
 

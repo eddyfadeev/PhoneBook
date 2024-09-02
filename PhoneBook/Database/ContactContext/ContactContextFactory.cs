@@ -4,6 +4,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace PhoneBook.Database.ContactContext;
 
+/// <summary>
+/// Factory for creating instances of <see cref="ContactContext"/> at design time.
+/// Implements <see cref="IDesignTimeDbContextFactory{ContactContext}"/> to facilitate
+/// the creation of the context for use with tools like Entity Framework Core migrations.
+/// </summary>
 internal class ContactContextFactory : IDesignTimeDbContextFactory<ContactContext>
 {
     private const string DefaultConnection = "DefaultConnection";
@@ -14,8 +19,8 @@ internal class ContactContextFactory : IDesignTimeDbContextFactory<ContactContex
             .AddJsonFile("appsettings.json")
             .Build();
         
-        var optionsBuilder = new DbContextOptionsBuilder<Database.ContactContext.ContactContext>();
-        var connectionString = configuration.GetConnectionString(DefaultConnection);
+        var optionsBuilder = new DbContextOptionsBuilder<ContactContext>();
+        string? connectionString = configuration.GetConnectionString(DefaultConnection);
         optionsBuilder.UseSqlServer(connectionString);
 
         return new ContactContext(configuration);

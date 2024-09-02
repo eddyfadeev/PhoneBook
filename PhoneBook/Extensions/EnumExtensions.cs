@@ -27,7 +27,14 @@ internal static class EnumExtensions
         
         return attribute is not null ? attribute.Description : enumValue.ToString();
     }
-    
+
+    /// <summary>
+    /// Retrieves the enum value that corresponds to the specified description.
+    /// </summary>
+    /// <typeparam name="TEnum">The type of the enum.</typeparam>
+    /// <param name="description">The description to match with an enum value.</param>
+    /// <returns>The enum value that corresponds to the specified description.</returns>
+    /// <exception cref="ArgumentException">Thrown when the description does not match any enum value.</exception>
     internal static TEnum GetEnumValueFromDescription<TEnum>(string description)
         where TEnum : struct, Enum
     {

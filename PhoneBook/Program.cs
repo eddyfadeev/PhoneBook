@@ -28,15 +28,20 @@ internal static class Program
             try
             {
                 menuHandler.HandleMenu();
-            } 
-            catch (ReturnToMainMenu e)
+            }
+            catch (ReturnToMainMenuException e)
             {
                 // Do nothing
             }
-            catch (ExitApplication e)
+            catch (ExitApplicationException e)
             {
                 AnsiConsole.MarkupLine(e.Message);
                 break;
+            }
+            catch (Exception e)
+            {
+                AnsiConsole.MarkupLine(e.Message);
+                HelperService.PressAnyKey();
             }
         }
         

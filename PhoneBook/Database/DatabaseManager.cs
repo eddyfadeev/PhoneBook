@@ -3,25 +3,31 @@ using PhoneBook.Interfaces.Database;
 
 namespace PhoneBook.Database;
 
+/// <summary>
+/// Manages the database connection for the application by initializing
+/// and providing access to the ContactContext.
+/// </summary>
 internal class DatabaseManager : IDatabaseManager
 {
-    private readonly IConfiguration _connectConfiguration;
+    private readonly IConfiguration _connectionConfiguration;
     
     public DatabaseManager(IConfiguration configuration)
     {
-        _connectConfiguration = configuration;
+        _connectionConfiguration = configuration;
         InitializeDatabase();
     }
-    
+
+    /// <summary>
+    /// Creates and returns a new instance of the ContactContext using the configured database connection settings.
+    /// </summary>
+    /// <returns>A new instance of ContactContext representing the database connection.</returns>
     public ContactContext.ContactContext GetConnection() =>
-        new (_connectConfiguration);
+        new (_connectionConfiguration);
     
-    // TODO: Move to initializer class + interface. Initialize database on startup in DI service to adhere to SOLID
     private void InitializeDatabase()
     {
         using var connection = GetConnection();
         
-        // TODO: You might don't need a bool, just catch the exception if any problem arise
         connection.Database.EnsureCreated();
     }
 }

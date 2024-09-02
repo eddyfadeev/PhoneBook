@@ -6,7 +6,10 @@ using PhoneBook.Services;
 
 namespace PhoneBook.Handlers.ContactHandlers;
 
-internal class ContactAdder : IContactAdder
+/// <summary>
+/// Handles the addition of new contacts to the repository.
+/// </summary>
+internal sealed class ContactAdder : IContactAdder
 {
     private readonly IRepository<Contact> _contactRepository;
 
@@ -14,7 +17,11 @@ internal class ContactAdder : IContactAdder
     {
         _contactRepository = contactRepository;
     }
-    
+
+    /// <summary>
+    /// Adds a new contact to the repository.
+    /// </summary>
+    /// <param name="message">Output message indicating the success or failure of the add operation.</param>
     public void AddContact(out string? message)
     {
         var contact = CreateContact();

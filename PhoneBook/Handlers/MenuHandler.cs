@@ -6,6 +6,10 @@ using Spectre.Console;
 
 namespace PhoneBook.Handlers;
 
+/// <summary>
+/// Handles the operation of displaying and executing menu commands based on user choices.
+/// </summary>
+/// <typeparam name="TMenu">The type of the menu enum representing the menu options.</typeparam>
 internal class MenuHandler<TMenu> : IMenuHandler
     where TMenu : struct, Enum
 {
@@ -18,7 +22,12 @@ internal class MenuHandler<TMenu> : IMenuHandler
         var title = GetMenuTitle();
         _menuEntries = menuEntries.GetMenuEntries<TMenu>(title);
     }
-    
+
+    /// <summary>
+    /// Handles the display and execution of menu options based on user input.
+    /// Displays the menu, waits for the user to make a selection, and executes
+    /// the corresponding command.
+    /// </summary>
     public void HandleMenu()
     {
         var userChoice = HandleUserChoice(_menuEntries);
